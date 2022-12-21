@@ -56,7 +56,7 @@ Widget vProductCardList(Product product, BuildContext ctx) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Consumer<SalesController>(
+                Consumer<ProductController>(
                   builder: (ctx, value, child) {
                     var q = value.getQtyTmp(product.pName!);
                     return Text(
@@ -70,18 +70,18 @@ Widget vProductCardList(Product product, BuildContext ctx) {
                   children: [
                     IconButton(
                         onPressed: () {
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .minusQtyTmp(product.pName!);
-                               Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .addQtyP(product);
                         },
                         icon: Icon(Icons.remove_circle_outline_rounded)),
                     SizedBox(width: 10),
                     IconButton(
                         onPressed: () {
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .addQtyTmp(product.pName!);
-                               Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .minusQtyP(product);
                         },
                         icon: Icon(Icons.add_circle_outline_rounded)),
@@ -99,7 +99,7 @@ Widget vProductCardList(Product product, BuildContext ctx) {
 Widget vProductCardGrid(Product product, BuildContext ctx) {
   return InkWell(
     onTap: () {
-      Provider.of<SalesController>(ctx, listen: false).addTmpProduct(product);
+      Provider.of<ProductController>(ctx, listen: false).addTmpProduct(product);
       // Provider.of<SalesController>(ctx, listen: false)
       //     .minusQtyP(product.pName!);
     },
@@ -121,8 +121,7 @@ Widget vProductCardGrid(Product product, BuildContext ctx) {
                   width: 200,
                   height: 95,
                   child: ClipRRect(
-                    child:
-                        Image.asset(product.pImgUrl!, fit: BoxFit.contain),
+                    child: Image.asset(product.pImgUrl!, fit: BoxFit.contain),
                   ),
                 ),
                 Positioned(
@@ -146,9 +145,9 @@ Widget vProductCardGrid(Product product, BuildContext ctx) {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Price: ${product.pSalePrice!.toString()}"),
-                  Consumer<SalesController>(
+                  Consumer<ProductController>(
                     builder: (context, value, child) {
-                     // var q = value.getQtyP(product.pName!);
+                      // var q = value.getQtyP(product.pName!);
                       return Text("Stock: ${product.pQuantity!.toString()}");
                     },
                   ),

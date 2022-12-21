@@ -36,6 +36,7 @@ class _NavigationsMobileState extends State<NavigationsMobile>
   final PdfInvoiceService service = PdfInvoiceService();
   int number = 0;
   String? window = "store";
+  
 
 
   @override

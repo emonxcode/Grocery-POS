@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +21,7 @@ class _SaleViewState extends State<SaleView> {
 
   @override
   Widget build(BuildContext context) {
-    _tmpProducts = Provider.of<SalesController>(context).getTmpProducts();
+    _tmpProducts = Provider.of<ProductController>(context).getTmpProducts();
 
     return Expanded(
       flex: 4,
@@ -66,7 +65,7 @@ class _SaleViewState extends State<SaleView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Consumer<SalesController>(
+                  Consumer<ProductController>(
                     builder: (context, value, child) {
                       return Text(
                         "TOTAL AMOUNT : ${value.getTotalAmount()!.toString()} TK",
@@ -103,7 +102,7 @@ class _SaleViewState extends State<SaleView> {
                       onPressed: () async {
                         final data = await service.createInvoice(
                           _tmpProducts,
-                          Provider.of<SalesController>(context, listen: false)
+                          Provider.of<ProductController>(context, listen: false)
                               .getTotalAmount()!,
                           context,
                         );

@@ -3,13 +3,11 @@ import 'package:grocery_pos/controller/productController.dart';
 import 'package:grocery_pos/models/product.dart';
 import 'package:provider/provider.dart';
 
+import '../../../controller/salesController.dart';
 import '../widgets/components_mobile.dart';
 
 class ProductsGridViewMobile extends StatefulWidget {
-   ProductsGridViewMobile({
-    super.key,
-    required this.searchController
-  });
+  ProductsGridViewMobile({super.key, required this.searchController});
 
   final TextEditingController searchController;
 
@@ -18,9 +16,20 @@ class ProductsGridViewMobile extends StatefulWidget {
 }
 
 class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
-
- bool _isLoaded = true;
+  bool _isLoaded = true;
   bool _isInit = true;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchSalesData();
+  }
+
+  void fetchSalesData() async {
+    await SalesController().getAllSeles();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -28,9 +37,7 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
       setState(() {
         _isLoaded = false;
       });
-      Provider.of<SalesController>(context)
-          .fetchAndSetProducts()
-          .then((_) {
+      Provider.of<ProductController>(context).fetchAndSetProducts().then((_) {
         setState(() {
           _isLoaded = true;
         });
@@ -41,10 +48,9 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
 
   List<Product> _products = [];
 
-
   @override
   Widget build(BuildContext context) {
-    _products = Provider.of<SalesController>(context).getProducts();
+    _products = Provider.of<ProductController>(context).getProducts();
     return Expanded(
       flex: 11,
       child: Container(
@@ -66,7 +72,8 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
               height: 50,
               child: Row(
                 children: [
-                  vSearchFieldMobile("Search products", widget.searchController),
+                  vSearchFieldMobile(
+                      "Search products", widget.searchController),
                   SizedBox(width: 6),
                   IconButton(
                       onPressed: () {},
@@ -80,16 +87,18 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
             ),
             SizedBox(height: 10.0),
             Expanded(
-              child: _isLoaded? GridView.builder(
-              itemCount: _products.length,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisSpacing: 2.0,
-                mainAxisSpacing: 2.0,
-                crossAxisCount: 2,
-              ),
-              itemBuilder: (context, i) {
-                return ProductCardGridMobile(product: _products[i]);
-              }) : Center(child: CircularProgressIndicator()),
+              child: _isLoaded
+                  ? GridView.builder(
+                      itemCount: _products.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisSpacing: 2.0,
+                        mainAxisSpacing: 2.0,
+                        crossAxisCount: 2,
+                      ),
+                      itemBuilder: (context, i) {
+                        return ProductCardGridMobile(product: _products[i]);
+                      })
+                  : Center(child: CircularProgressIndicator()),
             ),
           ],
         ),

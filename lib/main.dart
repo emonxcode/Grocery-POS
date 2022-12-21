@@ -8,11 +8,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 void main() {
-
   runApp(ChangeNotifierProvider(
-      create: (context) => SalesController(),
+      create: (context) => ProductController(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: !kIsWeb? NavigationsMobile() : NavigationsDesktop(),
+        home: !kIsWeb ? NavigationsMobile() : NavigationsDesktop(),
       )));
 }

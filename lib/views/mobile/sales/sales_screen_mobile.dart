@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:grocery_pos/controller/salesController.dart';
 import 'package:grocery_pos/views/invoice_view/print_invoice.dart';
+import 'package:intl/intl.dart';
 
 import '../../../models/product.dart';
+import '../../../models/sale.dart';
 import '../widgets/components_mobile.dart';
 import 'package:grocery_pos/controller/productController.dart';
 import 'package:provider/provider.dart';
@@ -33,12 +36,10 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
 
   bool c = true;
   @override
-  void didChangeDependencies() async {
+  void didChangeDependencies() {
     super.didChangeDependencies();
-    if (c) {
-      _tmpProducts = Provider.of<SalesController>(context).getTmpProducts();
-      c = false;
-    }
+
+    _tmpProducts = Provider.of<ProductController>(context).getTmpProducts();
   }
 
   @override
@@ -89,7 +90,7 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Consumer<SalesController>(
+                  Consumer<ProductController>(
                     builder: (context, value, child) {
                       return Text(
                         "TOTAL AMOUNT : ${value.getTotalAmount()!.toString()} TK",
@@ -124,7 +125,7 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
                     onPressed: () async {
                       final data = await service.createInvoice(
                         _tmpProducts,
-                        Provider.of<SalesController>(context, listen: false)
+                        Provider.of<ProductController>(context, listen: false)
                             .getTotalAmount()!,
                         context,
                       );
@@ -132,7 +133,7 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
                       number++;
 
                       setState(() {
-                        Provider.of<SalesController>(context, listen: false)
+                        Provider.of<ProductController>(context, listen: false)
                             .emptyTmpProducts();
                         _tmpProducts = [];
                       });
@@ -147,12 +148,36 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        var saleProductList = '';
+                        for (int i = 0; i < _tmpProducts.length; i++) {
+                          saleProductList =
+                              saleProductList + _tmpProducts[i].pName! + ", ";
+                        }
+                        Sale newSale = Sale(
+                          saleProductList: saleProductList,
+                          saleTotalAmount: Provider.of<ProductController>(
+                                  context,
+                                  listen: false)
+                              .getTotalAmount()!,
+                          saleNoOfItems: _tmpProducts.length,
+                          saleDate: DateTime.now().toString(),
+                        );
+                        int result = await SalesController().addSales(newSale);
+                        if (result > 0) {
+                          print("----- products sold ---");
+                        }
+
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (ctx) =>
                                     PrintPage(products: _tmpProducts)));
+                        setState(() {
+                          Provider.of<ProductController>(context, listen: false)
+                              .emptyTmpProducts();
+                          _tmpProducts = [];
+                        });
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

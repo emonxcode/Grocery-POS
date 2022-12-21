@@ -27,8 +27,6 @@ class _NavigationsDesktopState extends State<NavigationsDesktop> {
     'Debit/Credit card',
   ];
 
- 
-
   List<Product> _products = [];
   List<Product> _tmpProducts = [];
 
@@ -41,7 +39,7 @@ class _NavigationsDesktopState extends State<NavigationsDesktop> {
       setState(() {
         _isLoaded = false;
       });
-      Provider.of<SalesController>(context).fetchAndSetProducts().then((_) {
+      Provider.of<ProductController>(context).fetchAndSetProducts().then((_) {
         setState(() {
           _isLoaded = true;
         });
@@ -221,11 +219,11 @@ class _NavigationsDesktopState extends State<NavigationsDesktop> {
               ),
             ),
             if (window == "sales_store")
-            StoreAndSales()
+              StoreAndSales()
             else if (window == "stock")
-            StockView()
+              StockView()
             else if (window == "report")
-            ReportView()
+              ReportView()
             // else if (window == "settings")
           ],
         ),

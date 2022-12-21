@@ -37,7 +37,7 @@ class _StockViewMobileState extends State<StockViewMobile> {
       setState(() {
         _isLoaded = false;
       });
-      await Provider.of<SalesController>(context).fetchAndSetProducts();
+      await Provider.of<ProductController>(context).fetchAndSetProducts();
       setState(() {
         _isLoaded = true;
       });
@@ -47,7 +47,7 @@ class _StockViewMobileState extends State<StockViewMobile> {
 
   @override
   Widget build(BuildContext context) {
-    _products = Provider.of<SalesController>(context).getProducts();
+    _products = Provider.of<ProductController>(context).getProducts();
     return Expanded(
       flex: 11,
       child: Container(
@@ -82,7 +82,7 @@ class _StockViewMobileState extends State<StockViewMobile> {
                         return stockProductCardMobile(
                             _products[index],
                             context,
-                            Provider.of<SalesController>(context,
+                            Provider.of<ProductController>(context,
                                 listen: false));
                       },
                     )
@@ -120,47 +120,85 @@ class _StockViewMobileState extends State<StockViewMobile> {
   }
 
   Widget stockProductCardMobile(
-      Product product, BuildContext context, SalesController controller) {
+      Product product, BuildContext context, ProductController controller) {
     return InkWell(
       onTap: () {
-        showDialog(
+        showModalBottomSheet(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(25.0))),
             context: context,
-            builder: (ctx) {
-              return AlertDialog(
-                title: Text("Buy more from supplier"),
-                content: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      TextField(
-                        controller: pQController,
-                        decoration: InputDecoration(
-                          hintText: "Enter quantity.",
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
+            isScrollControlled: true,
+            builder: (context) {
+              return Padding(
+                padding: EdgeInsets.only(
+                    bottom: MediaQuery.of(context).viewInsets.bottom),
+                child: Column(
+                  children: [
+                    Text("Buy Now :)"),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: pQController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        label: Text("Enter Quantity"),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 10),
+                    TextField(
+                      controller: pQController,
+                      decoration: InputDecoration(
+                        label: Text("Supplier Name"),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                actions: [
-                  TextButton(
-                      onPressed: () {
-                        controller.addMoreQtyP(
-                            int.parse(pQController.text), product);
-                        pQController.text = "";
-                        Navigator.pop(context);
-                      },
-                      child: Text("UPDATE")),
-                  SizedBox(width: 7),
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text("CANCEL")),
-                ],
               );
             });
+        // showDialog(
+        //     context: context,
+        //     builder: (ctx) {
+        //       return AlertDialog(
+        //         title: Text("Buy more from supplier"),
+        //         content: SingleChildScrollView(
+        //           child: Column(
+        //             children: [
+        //               TextField(
+        //                 controller: pQController,
+        //                 decoration: InputDecoration(
+        //                   hintText: "Enter quantity.",
+        //                   border: OutlineInputBorder(
+        //                     borderSide: BorderSide.none,
+        //                   ),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //         ),
+        //         actions: [
+        //           TextButton(
+        //               onPressed: () {
+        //                 controller.addMoreQtyP(
+        //                     int.parse(pQController.text), product);
+        //                 pQController.text = "";
+        //                 Navigator.pop(context);
+        //               },
+        //               child: Text("UPDATE")),
+        //           SizedBox(width: 7),
+        //           TextButton(
+        //               onPressed: () {
+        //                 Navigator.pop(context);
+        //               },
+        //               child: Text("CANCEL")),
+        //         ],
+        //       );
+        //     });
       },
       child: Container(
         height: 130,

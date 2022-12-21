@@ -64,7 +64,7 @@ class _ModifyProductState extends State<ModifyProduct> {
                     pSupplier: pSupplierController.text);
                 int result;
                 result =
-                    await Provider.of<SalesController>(context, listen: false)
+                    await Provider.of<ProductController>(context, listen: false)
                         .addProduct(newProduct);
                 print(result);
                 if (result > 0) {
@@ -103,7 +103,7 @@ class _ModifyProductState extends State<ModifyProduct> {
             TextField(
               controller: pNameController,
               decoration: InputDecoration(
-                hintText: "Product name.",
+                label: Text("Product name."),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
@@ -113,49 +113,63 @@ class _ModifyProductState extends State<ModifyProduct> {
               ),
             ),
             SizedBox(height: 10),
-            TextField(
-              controller: pBuyingPriceController,
-              decoration: InputDecoration(
-                hintText: "Product buying price.",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
+            Row(
+              children: [
+             Expanded(
+               child: TextField(
+                controller: pBuyingPriceController,
+                 keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  label: Text("Buying price."),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  borderRadius: BorderRadius.circular(20),
+                ),
+                         ),
+             ),
+              SizedBox(width: 5),
+            Expanded(
+              child: TextField(
+                controller: pSellingPriceController,
+                 keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  label: Text("Selling price."),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            TextField(
-              controller: pSellingPriceController,
-              decoration: InputDecoration(
-                hintText: "Product selling price.",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
+            SizedBox(width: 5),
+            Expanded(
+              child: TextField(
+                controller: pQuantityController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  label: Text("Quantity."),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  borderRadius: BorderRadius.circular(20),
                 ),
               ),
             ),
-            SizedBox(height: 10),
-            TextField(
-              controller: pQuantityController,
-              decoration: InputDecoration(
-                hintText: "Product quantity.",
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-              ),
+              ],
             ),
+           
             SizedBox(height: 10),
             TextField(
               controller: pBrandController,
               decoration: InputDecoration(
-                hintText: "Product brand name.",
+                label: Text("Product brand name."),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
@@ -168,7 +182,7 @@ class _ModifyProductState extends State<ModifyProduct> {
             TextField(
               controller: pSupplierController,
               decoration: InputDecoration(
-                hintText: "Product supplier.",
+                label: Text("Product supplier."),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 1,
@@ -181,7 +195,7 @@ class _ModifyProductState extends State<ModifyProduct> {
             TextField(
               controller: pDescController,
               decoration: InputDecoration(
-                hintText: "Product description.",
+                label: Text("Product description."),
                 border: OutlineInputBorder(
                   borderSide: BorderSide(
                     width: 0.5,
@@ -197,7 +211,7 @@ class _ModifyProductState extends State<ModifyProduct> {
                       await _picker!.pickImage(source: ImageSource.gallery);
                   setState(() {});
                 },
-                child: Text("Pick Image")),
+                child: Text("Pick an Image")),
             _image != null
                 ? Container(
                     width: double.infinity,

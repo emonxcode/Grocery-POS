@@ -60,7 +60,7 @@ Widget vProductCardListMobile(Product product, BuildContext ctx) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Consumer<SalesController>(
+                Consumer<ProductController>(
                   builder: (ctx, value, child) {
                     var q = value.getQtyTmp(product.pName!);
                     return Text(
@@ -74,18 +74,18 @@ Widget vProductCardListMobile(Product product, BuildContext ctx) {
                   children: [
                     IconButton(
                         onPressed: () {
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .minusQtyTmp(product.pName!);
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .addQtyP(product);
                         },
                         icon: Icon(Icons.remove_circle_outline_rounded)),
                     SizedBox(width: 10),
                     IconButton(
                         onPressed: () {
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .addQtyTmp(product.pName!);
-                          Provider.of<SalesController>(ctx, listen: false)
+                          Provider.of<ProductController>(ctx, listen: false)
                               .minusQtyP(product);
                         },
                         icon: Icon(Icons.add_circle_outline_rounded)),
@@ -133,15 +133,14 @@ class _ProductCardGridMobileState extends State<ProductCardGridMobile>
         setState(() {
           if (!isSelected) {
             isSelected = true;
-            Provider.of<SalesController>(context, listen: false)
-            .addTmpProduct(widget.product!);
+            Provider.of<ProductController>(context, listen: false)
+                .addTmpProduct(widget.product!);
           } else {
             isSelected = false;
-            Provider.of<SalesController>(context, listen: false)
-            .removeSingleProductTemp(widget.product!.pName!);
+            Provider.of<ProductController>(context, listen: false)
+                .removeSingleProductTemp(widget.product!.pName!);
           }
         });
-        
       },
       child: Container(
         height: 200,
@@ -150,7 +149,9 @@ class _ProductCardGridMobileState extends State<ProductCardGridMobile>
           borderRadius: BorderRadius.circular(5),
         ),
         child: Card(
-          color: !isSelected? Color.fromRGBO(255, 255, 255, 1) : Color.fromARGB(255, 219, 212, 255),
+          color: !isSelected
+              ? Color.fromRGBO(255, 255, 255, 1)
+              : Color.fromARGB(255, 219, 212, 255),
           elevation: 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +167,8 @@ class _ProductCardGridMobileState extends State<ProductCardGridMobile>
                     ),
                   ),
                   Positioned(
-                    child: Icon(isSelected? Icons.done_rounded : Icons.add_circle),
+                    child: Icon(
+                        isSelected ? Icons.done_rounded : Icons.add_circle),
                     top: 5,
                     right: 5,
                   ),
@@ -186,7 +188,7 @@ class _ProductCardGridMobileState extends State<ProductCardGridMobile>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Price: ${widget.product!.pSalePrice!.toString()}"),
-                    Consumer<SalesController>(
+                    Consumer<ProductController>(
                       builder: (context, value, child) {
                         var q = value.getQtyP(widget.product!.pName!);
                         return Text("Stock: ${q!.toString()}");

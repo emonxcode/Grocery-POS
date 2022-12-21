@@ -3,7 +3,7 @@ import 'package:grocery_pos/database/product_database_helper.dart';
 
 import '../models/product.dart';
 
-class SalesController with ChangeNotifier {
+class ProductController with ChangeNotifier {
   List<Product> _products = [];
   List<Product> _tmpProducts = [];
   DatabaseHelper db = DatabaseHelper();
