@@ -40,6 +40,7 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
       Provider.of<ProductController>(context).fetchAndSetProducts().then((_) {
         setState(() {
           _isLoaded = true;
+   
         });
       });
     }
@@ -50,7 +51,10 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
 
   @override
   Widget build(BuildContext context) {
-    _products = Provider.of<ProductController>(context).getProducts();
+   if(widget.searchController.text.isEmpty){
+     _products = Provider.of<ProductController>(context).getProducts();
+   }
+   var _controller = Provider.of<ProductController>(context);
     return Expanded(
       flex: 11,
       child: Container(
@@ -61,11 +65,11 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
           children: [
             Text(
               "Welcome, GroceryPOS",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             Text(
               "A total pos solution",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18),
             ),
             SizedBox(height: 10.0),
             Container(
@@ -76,7 +80,12 @@ class _ProductsGridViewMobileState extends State<ProductsGridViewMobile> {
                       "Search products", widget.searchController),
                   SizedBox(width: 6),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        print(widget.searchController.text);
+                        setState(() {
+                            _products = _controller.searchProduct(widget.searchController.text);                          
+                        });
+                      },
                       icon: Icon(
                         Icons.search_rounded,
                         color: Colors.black,

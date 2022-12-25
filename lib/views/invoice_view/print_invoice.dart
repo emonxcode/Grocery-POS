@@ -98,27 +98,66 @@ class _PrintPageState extends State<PrintPage> {
         ),
       );
 
+  lines.add(
+        LineText(
+          type: LineText.TYPE_TEXT,
+          content: "----------------",
+          weight: 2,
+          width: 2,
+          height: 2,
+          align: LineText.ALIGN_CENTER,
+          linefeed: 1,
+        ),
+      );
+
       for (int i = 0; i < widget.products!.length; i++) {
-        lines.add(
-          LineText(
-            type: LineText.TYPE_TEXT,
-            content: widget.products![i].pName,
-            width: 0,
-            align: LineText.ALIGN_LEFT,
-            linefeed: 1,
-          ),
-        );
+        // lines.add(
+        //   LineText(
+        //     type: LineText.TYPE_TEXT,
+        //     content: widget.products![i].pName,
+        //     width: 0,
+        //     align: LineText.ALIGN_LEFT,
+        //     linefeed: 1,
+        //   ),
+        // );
         lines.add(
           LineText(
             type: LineText.TYPE_TEXT,
             content:
-                "${f.format(widget.products![i].pSalePrice!)} x ${f.format(widget.products![i].pQuantity!)}",
+                "${f.format(widget.products![i].pName!)} - ${f.format(widget.products![i].pSalePrice!)} x ${f.format(widget.products![i].pQuantity!)}",
             width: 0,
-            align: LineText.ALIGN_LEFT,
+            align: LineText.ALIGN_RIGHT,
             linefeed: 1,
           ),
         );
       }
+
+
+        lines.add(
+        LineText(
+          type: LineText.TYPE_TEXT,
+          content: "----------------------",
+          weight: 2,
+          width: 2,
+          height: 2,
+          align: LineText.ALIGN_CENTER,
+          linefeed: 1,
+        ),
+      );
+
+        lines.add(
+        LineText(
+          type: LineText.TYPE_TEXT,
+          content: "Total Amount : ",
+          weight: 2,
+          width: 2,
+          height: 2,
+          align: LineText.ALIGN_CENTER,
+          linefeed: 1,
+        ),
+      );
+
+
     }
   }
 }

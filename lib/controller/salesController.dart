@@ -31,5 +31,8 @@ class SalesController {
     return totalAmount!;
   }
 
-  getTotalProfitAmountToday() {}
+  getTotalProfitAmountToday() {
+    _sales.forEach((element) {});
+  }
+
 }

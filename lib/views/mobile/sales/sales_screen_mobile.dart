@@ -65,7 +65,7 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
                   ),
                   Text(
                     "Place products to customer",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
@@ -151,8 +151,7 @@ class _OrdersListViewMobileState extends State<OrdersListViewMobile> {
                       onPressed: () async {
                         var saleProductList = '';
                         for (int i = 0; i < _tmpProducts.length; i++) {
-                          saleProductList =
-                              saleProductList + _tmpProducts[i].pName! + ", ";
+                          saleProductList = saleProductList + _tmpProducts[i].pName! + ", ";
                         }
                         Sale newSale = Sale(
                           saleProductList: saleProductList,

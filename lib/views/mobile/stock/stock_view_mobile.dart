@@ -27,6 +27,7 @@ class _StockViewMobileState extends State<StockViewMobile> {
   var pImgUrlController = TextEditingController();
 
   var pQController = TextEditingController();
+  var pSController = TextEditingController();
 
   bool _isLoaded = true;
   bool _isInit = true;
@@ -68,7 +69,7 @@ class _StockViewMobileState extends State<StockViewMobile> {
                   ),
                   Text(
                     "Manage product stock",
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 18),
                   ),
                 ],
               ),
@@ -133,72 +134,54 @@ class _StockViewMobileState extends State<StockViewMobile> {
               return Padding(
                 padding: EdgeInsets.only(
                     bottom: MediaQuery.of(context).viewInsets.bottom),
-                child: Column(
-                  children: [
-                    Text("Buy Now :)"),
-                    SizedBox(height: 10),
-                    TextField(
-                      controller: pQController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        label: Text("Enter Quantity"),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                child: Container(
+                  padding: EdgeInsets.all(18),
+                  height: 250,
+                  child: Column(
+                    children: [
+                      Text("Buy Now :)"),
+                      SizedBox(height: 10),
+                      TextField(
+                        controller: pQController,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          label: Text("Enter Quantity"),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    TextField(
-                      controller: pQController,
-                      decoration: InputDecoration(
-                        label: Text("Supplier Name"),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
+                      SizedBox(height: 15),
+                      TextField(
+                        controller: pSController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          label: Text("Supplier Name"),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 15),
+                      ElevatedButton(
+                          onPressed: () {
+                            controller.addMoreQtyP(
+                                int.parse(pQController.text), product);
+                            pQController.text = "";
+                            Navigator.pop(context);
+                          },
+                          child: Text("Proceed")),
+                    ],
+                  ),
                 ),
               );
             });
-        // showDialog(
-        //     context: context,
-        //     builder: (ctx) {
-        //       return AlertDialog(
-        //         title: Text("Buy more from supplier"),
-        //         content: SingleChildScrollView(
-        //           child: Column(
-        //             children: [
-        //               TextField(
-        //                 controller: pQController,
-        //                 decoration: InputDecoration(
-        //                   hintText: "Enter quantity.",
-        //                   border: OutlineInputBorder(
-        //                     borderSide: BorderSide.none,
-        //                   ),
-        //                 ),
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //         actions: [
-        //           TextButton(
-        //               onPressed: () {
-        //                 controller.addMoreQtyP(
-        //                     int.parse(pQController.text), product);
-        //                 pQController.text = "";
-        //                 Navigator.pop(context);
-        //               },
-        //               child: Text("UPDATE")),
-        //           SizedBox(width: 7),
-        //           TextButton(
-        //               onPressed: () {
-        //                 Navigator.pop(context);
-        //               },
-        //               child: Text("CANCEL")),
-        //         ],
-        //       );
-        //     });
+    
       },
       child: Container(
         height: 130,

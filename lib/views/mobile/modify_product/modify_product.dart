@@ -128,7 +128,7 @@ class _ModifyProductState extends State<ModifyProduct> {
                     borderRadius: BorderRadius.circular(20),
                   ),
                 ),
-                         ),
+              ),
              ),
               SizedBox(width: 5),
             Expanded(

@@ -38,6 +38,17 @@ class ProductController with ChangeNotifier {
     return _products;
   }
 
+  List<Product> searchProduct(String text){
+    var searchedItem = <Product>[];
+    _products.forEach((item){
+      if(item.pName!.toLowerCase().contains(text.toLowerCase())){
+        searchedItem.add(item);
+      }
+    });
+    
+   return searchedItem;
+  }
+
   List<Product> getTmpProducts() {
     return _tmpProducts;
   }
